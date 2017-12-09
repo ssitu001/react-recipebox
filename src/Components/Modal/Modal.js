@@ -4,29 +4,38 @@ import { Modal, Button } from 'react-bootstrap';
 import FormComponent from '../FormGroup/FormGroup';
 
 const ModalComponent = (props) => {
-  // console.log('modalprops', props)
+  console.log('modalprops', props)
+  const { 
+    showModal,
+    closeModal, 
+    modalType, 
+    addRecipe, 
+    editRecipe,
+    position 
+  } = props;
+
   return (
-    <Modal show={props.showModal} onHide={props.closeModal}>
+    <Modal show={showModal} onHide={closeModal}>
       <Modal.Header closeButton>
-        <Modal.Title>{props.heading}</Modal.Title>
+        <Modal.Title>{modalType}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <FormComponent
-          handleRecipeName={props.handleRecipeName}
-          handleRecipeIngredients={props.handleRecipeIngredients}
+          {...props}
         />
       </Modal.Body>
       <Modal.Footer>
-        {props.cta === 'Add Recipe' 
+        {modalType === 'Add Recipe' 
           ? <Button 
-              onClick={props.addRecipe}
-              bsStyle="success">{props.cta}
+              onClick={addRecipe}
+              bsStyle="success">{modalType}
             </Button>
           : <Button 
-              bsStyle="danger">{props.cta}
+              onClick={() => editRecipe(position)}
+              bsStyle="danger">{modalType}
             </Button>
         }
-        <Button onClick={props.closeModal}>Close</Button>
+        <Button onClick={closeModal}>Close</Button>
       </Modal.Footer>
     </Modal>
   )

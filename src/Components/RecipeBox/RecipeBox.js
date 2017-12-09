@@ -15,6 +15,7 @@ class RecipeBox extends Component {
       currentRecipeIngredients: '',
       showModal: false,
       modalType: '',
+      position: null,
     };
   }
 
@@ -22,16 +23,26 @@ class RecipeBox extends Component {
     this.setState({showModal: false});
   }
 
-  openModal = (type) => {
-    this.setState({showModal: true, modalType: type});
+  openModal = (type, position) => {
+    console.log('position==', position)
+    const {recipes, currentRecipeName, currentRecipeIngredients} = this.state;
+    const currentRecipe = recipes[position];
+    const recipeName = currentRecipe.name || currentRecipeName;
+    const recipeIngredients = currentRecipe.ingredients || currentRecipeIngredients;
+
+    this.setState({
+      showModal: true, 
+      modalType: type, 
+      position: position,
+      currentRecipeName: recipeName || '',
+      currentRecipeIngredients: recipeIngredients || '',
+    });
   }
 
   componentDidMount() {
     //save recipes to local storage
-    console.log(localStorage)
     const myStorage = localStorage;
     const myRecipes = JSON.parse(myStorage.getItem('__recipes'));
-    console.log('myRecipes', myRecipes)
     if (myRecipes) {
       this.setState({
         recipes: myRecipes,
@@ -41,32 +52,43 @@ class RecipeBox extends Component {
 
   componentDidUpdate() {
     console.log(this.state)
-    this.updateLocalStorage()
   }
-  
-  handleRecipeName = (e) => {
+
+
+  handleRecipe = (e) => {
     this.setState({
-      currentRecipeName: e.target.value,
+      [e.target.name]: e.target.value,
     })
   }
 
-  handleRecipeIngredients = (e) => {
+  editRecipe = (position) => {
+    console.log('position', position)
+    const {currentRecipeName, currentRecipeIngredients, recipes} = this.state;
+    const recipeToReplace = {
+      name: currentRecipeName,
+      ingredients: !Array.isArray(currentRecipeIngredients) ? currentRecipeIngredients.split(',') : currentRecipeIngredients,
+    }
+
+    const recipesCopy = recipes.slice();
+    recipesCopy[position] = recipeToReplace;
+
+    console.log('recipesCopy', recipesCopy)
     this.setState({
-      currentRecipeIngredients: e.target.value,
-    });
+      recipes: recipesCopy,
+    }, () => this.updateLocalStorage());
+
+    this.closeModal();
   }
 
   addRecipe = () => {
-    const {currentRecipeName, currentRecipeIngredients, recipes, count} = this.state;
+    const {currentRecipeName, currentRecipeIngredients, recipes} = this.state;
     const recipeToAdd = {
-      // id: count,
       name: currentRecipeName,
       ingredients: currentRecipeIngredients.split(','),
     }
     this.setState({
-      // count: count+1,
       recipes: recipes.concat(recipeToAdd)
-    });
+    }, () => this.updateLocalStorage());
 
     this.closeModal();
   }
@@ -76,7 +98,7 @@ class RecipeBox extends Component {
     
     this.setState({
       recipes: recipes.filter((recipes, i) => i !== idx),
-    });
+    }, () => this.updateLocalStorage());
   }
 
   updateLocalStorage() {
@@ -86,27 +108,15 @@ class RecipeBox extends Component {
     myStorage.setItem('__recipes', JSON.stringify(recipes));
   }
  
-  createModal(type) {
+  createModal(type, position) {
     return (
-      // type === 'Add Recipe'
-      // ? 
       <ModalComponent
-        handleRecipeName={this.handleRecipeName}
-        handleRecipeIngredients={this.handleRecipeIngredients}
+        {...this.state}
+        handleRecipe={this.handleRecipe}
         addRecipe={this.addRecipe}
-        heading={this.state.modalType} 
-        showModal={this.state.showModal} 
+        editRecipe={this.editRecipe}
         closeModal={this.closeModal}
-        cta={this.state.modalType}
       />
-      // : <ModalComponent
-      //     handleRecipeName={this.handleRecipeName}
-      //     handleRecipeIngredients={this.handleRecipeIngredients}
-      //     heading={this.state.modalType} 
-      //     showModal={this.state.showModal} 
-      //     closeModal={this.closeModal}
-      //     cta={'Edit Recipe'}
-      // />
     )
   }
 

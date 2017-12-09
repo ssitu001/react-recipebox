@@ -3,29 +3,55 @@ import { FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 
 class FormComponent extends Component {
   state = {
-    value: '',
+    name: '',
   }
 
   render() {
-    // console.log('props', this.props)
+    console.log('formprops', this.props)
+    const {
+      currentRecipeName, 
+      currentRecipeIngredients, 
+      handleRecipe,
+      modalType,
+    } = this.props;
+
     return (
       <form>
-        <FormGroup>
+        {
+          modalType === 'Add Recipe'
+          ? <FormGroup>
           <ControlLabel>Recipes</ControlLabel>
           <FormControl
             type="text"
-            // value={this.state.value}
             placeholder="Recipe Name"
-            onChange={this.props.handleRecipeName}
+            onChange={handleRecipe}
           />
           <ControlLabel>Ingredients</ControlLabel>
           <FormControl
             componentClass="textarea"
-            // value={this.state.value}
             placeholder="Ingredients"
-            onChange={this.props.handleRecipeIngredients}
+            onChange={handleRecipe}
           />
         </FormGroup>
+        : <FormGroup>
+            <ControlLabel>Recipes</ControlLabel>
+            <FormControl
+              type="text"
+              value={currentRecipeName}
+              name="currentRecipeName"
+              // placeholder="Recipe Name"
+              onChange={handleRecipe}
+            />
+            <ControlLabel>Ingredients</ControlLabel>
+            <FormControl
+              componentClass="textarea"
+              value={currentRecipeIngredients}
+              // placeholder="Ingredients"
+              name="currentRecipeIngredients"
+              onChange={handleRecipe}
+            />
+          </FormGroup>
+        }
       </form>
     )
   }

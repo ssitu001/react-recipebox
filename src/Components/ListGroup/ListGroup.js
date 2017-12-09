@@ -7,7 +7,6 @@ const ListGroupComponent = (props) => {
   const listItem = ingredients.map((ingredient, i) => {
     return <ListGroupItem key={i}>{ingredient}</ListGroupItem>
   });
-  console.log('position', position)
   return (
     <ListGroup>
       {listItem}
@@ -18,7 +17,7 @@ const ListGroupComponent = (props) => {
           Delete
         </Button>
         <Button 
-          onClick={() => openModal('Edit Recipe')} 
+          onClick={() => openModal('Edit Recipe', position)} 
           bsStyle="warning">
           Edit
         </Button>
