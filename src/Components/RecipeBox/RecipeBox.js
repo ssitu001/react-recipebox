@@ -9,14 +9,10 @@ class RecipeBox extends Component {
     super();
 
     this.state = {
-      recipes: [
-        {
-          id: 0,
-          name: 'Cookies',
-          ingredients: ['milk', 'butter', 'sugar'],
-        }
-      ],
-      currentRecipe: {},
+      count: 0,
+      recipes: [],
+      currentRecipeName: '',
+      currentRecipeIngredients: '',
       showModal: false,
       modalType: '',
     };
@@ -32,22 +28,86 @@ class RecipeBox extends Component {
 
   componentDidMount() {
     //save recipes to local storage
+    console.log(localStorage)
+    const myStorage = localStorage;
+    const myRecipes = JSON.parse(myStorage.getItem('__recipes'));
+    console.log('myRecipes', myRecipes)
+    if (myRecipes) {
+      this.setState({
+        recipes: myRecipes,
+      })
+    }
   }
 
   componentDidUpdate() {
     console.log(this.state)
   }
+  
+  handleRecipeName = (e) => {
+    this.setState({
+      currentRecipeName: e.target.value,
+    })
+  }
 
+  handleRecipeIngredients = (e) => {
+    this.setState({
+      currentRecipeIngredients: e.target.value,
+    });
+  }
+
+  addRecipe = () => {
+    const {currentRecipeName, currentRecipeIngredients, recipes, count} = this.state;
+    const recipeToAdd = {
+      // id: count,
+      name: currentRecipeName,
+      ingredients: currentRecipeIngredients.split(','),
+    }
+    //async, handle later
+    this.setState({
+      // count: count+1,
+      recipes: recipes.concat(recipeToAdd)
+    });
+
+    this.addToLocalStorage(recipeToAdd);
+    this.closeModal();
+  }
+
+  addToLocalStorage(recipeToAdd) {
+    //local storage
+    const myStorage = localStorage;
+    const currentRecipes = JSON.parse(myStorage.getItem('__recipes'));
+
+    if (currentRecipes) {
+      myStorage.setItem('__recipes', JSON.stringify(currentRecipes.concat(recipeToAdd)));
+    } else {
+      myStorage.setItem('__recipes', JSON.stringify([recipeToAdd]));
+    }
+  }
+ 
   createModal(type) {
-    console.log('type', type)
     return (
+      // type === 'Add Recipe'
+      // ? 
       <ModalComponent
+        handleRecipeName={this.handleRecipeName}
+        handleRecipeIngredients={this.handleRecipeIngredients}
+        addRecipe={this.addRecipe}
         heading={this.state.modalType} 
         showModal={this.state.showModal} 
         closeModal={this.closeModal}
+        cta={this.state.modalType}
       />
+      // : <ModalComponent
+      //     handleRecipeName={this.handleRecipeName}
+      //     handleRecipeIngredients={this.handleRecipeIngredients}
+      //     heading={this.state.modalType} 
+      //     showModal={this.state.showModal} 
+      //     closeModal={this.closeModal}
+      //     cta={'Edit Recipe'}
+      // />
     )
   }
+
 
   render() {
     return (

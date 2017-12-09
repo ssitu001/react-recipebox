@@ -2,7 +2,7 @@ import React from 'react';
 import { ListGroup, ListGroupItem, Button } from 'react-bootstrap';
 
 const ListGroupComponent = (props) => {
-  console.log('props', props)
+  // console.log('props', props)
   const { ingredients, openModal, closeModal} = props;
   const listItem = ingredients.map((ingredient, i) => {
     return <ListGroupItem key={i}>{ingredient}</ListGroupItem>

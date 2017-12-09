@@ -5,10 +5,11 @@ import PanelComponent from '../Panel/Panel';
 
 
 const PanelGroupComponent = (props) => {
-  const panels = props.recipes.map((recipe) => {
+  // console.log('panelGroup', props)
+  const panels = props.recipes.map((recipe, i) => {
     return (
       <PanelComponent 
-        key={recipe.id} 
+        key={i} 
         {...recipe} 
         openModal={props.openModal} 
         closeModal={props.closeModal}

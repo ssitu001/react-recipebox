@@ -7,22 +7,23 @@ class FormComponent extends Component {
   }
 
   render() {
+    // console.log('props', this.props)
     return (
       <form>
         <FormGroup>
           <ControlLabel>Recipes</ControlLabel>
           <FormControl
             type="text"
-            value={this.state.value}
+            // value={this.state.value}
             placeholder="Recipe Name"
-            // onChange={this.handleChange}
+            onChange={this.props.handleRecipeName}
           />
           <ControlLabel>Ingredients</ControlLabel>
           <FormControl
             componentClass="textarea"
-            value={this.state.value}
+            // value={this.state.value}
             placeholder="Ingredients"
-            // onChange={this.handleChange}
+            onChange={this.props.handleRecipeIngredients}
           />
         </FormGroup>
       </form>
