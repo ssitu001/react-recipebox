@@ -62,26 +62,27 @@ class RecipeBox extends Component {
       name: currentRecipeName,
       ingredients: currentRecipeIngredients.split(','),
     }
-    //async, handle later
     this.setState({
       // count: count+1,
       recipes: recipes.concat(recipeToAdd)
-    });
+    }, this.updateLocalStorage());
 
-    this.addToLocalStorage(recipeToAdd);
     this.closeModal();
   }
 
-  addToLocalStorage(recipeToAdd) {
-    //local storage
-    const myStorage = localStorage;
-    const currentRecipes = JSON.parse(myStorage.getItem('__recipes'));
+  deleteRecipe = (idx) => {
+    const recipesCopy = this.state.recipes.slice();
+    recipesCopy.splice(idx, 1);
+    this.setState({
+      recipes: recipesCopy,
+    }, this.updateLocalStorage());
+  }
 
-    if (currentRecipes) {
-      myStorage.setItem('__recipes', JSON.stringify(currentRecipes.concat(recipeToAdd)));
-    } else {
-      myStorage.setItem('__recipes', JSON.stringify([recipeToAdd]));
-    }
+  updateLocalStorage() {
+    const { recipes } = this.state;
+    console.log('yo', recipes)
+    const myStorage = localStorage;
+    myStorage.setItem('__recipes', JSON.stringify(recipes));
   }
  
   createModal(type) {
@@ -115,7 +116,9 @@ class RecipeBox extends Component {
         <Row>
           <Col lg={12}>
             <Well>
+              Recipes...
               <PanelGroupComponent
+                handleDelete={this.deleteRecipe}
                 openModal={this.openModal}
                 closeModal={this.closeModal} 
                 {...this.state} />

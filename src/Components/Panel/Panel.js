@@ -5,13 +5,14 @@ import ListGroupComponent from '../ListGroup/ListGroup';
 
 const PanelComponent = (props) => {
   
-  const {id, name, ingredients, openModal, closeModal} = props;
+  const {position, name, ingredients, handleDelete, openModal, closeModal} = props;
 
   return (
     <Panel bsStyle="primary" collapsible header={name} eventKey="1">
       <ListGroupComponent 
-        id={id} 
+        position={position} 
         ingredients={ingredients}
+        handleDelete={handleDelete}
         openModal={openModal}
         closeModal={closeModal} 
       />

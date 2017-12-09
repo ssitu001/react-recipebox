@@ -3,16 +3,17 @@ import { ListGroup, ListGroupItem, Button } from 'react-bootstrap';
 
 const ListGroupComponent = (props) => {
   // console.log('props', props)
-  const { ingredients, openModal, closeModal} = props;
+  const { position, ingredients, handleDelete, openModal, closeModal} = props;
   const listItem = ingredients.map((ingredient, i) => {
     return <ListGroupItem key={i}>{ingredient}</ListGroupItem>
   });
-
+  console.log('position', position)
   return (
     <ListGroup>
       {listItem}
       <div className="panel-button-group">
-        <Button 
+        <Button
+          onClick={() => {handleDelete(position)}} 
           bsStyle="danger">
           Delete
         </Button>

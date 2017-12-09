@@ -9,8 +9,10 @@ const PanelGroupComponent = (props) => {
   const panels = props.recipes.map((recipe, i) => {
     return (
       <PanelComponent 
-        key={i} 
+        key={i}
+        position={i} 
         {...recipe} 
+        handleDelete={props.handleDelete}
         openModal={props.openModal} 
         closeModal={props.closeModal}
       />
