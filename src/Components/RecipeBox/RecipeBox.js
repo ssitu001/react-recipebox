@@ -41,6 +41,7 @@ class RecipeBox extends Component {
 
   componentDidUpdate() {
     console.log(this.state)
+    this.updateLocalStorage()
   }
   
   handleRecipeName = (e) => {
@@ -65,17 +66,17 @@ class RecipeBox extends Component {
     this.setState({
       // count: count+1,
       recipes: recipes.concat(recipeToAdd)
-    }, this.updateLocalStorage());
+    });
 
     this.closeModal();
   }
 
   deleteRecipe = (idx) => {
-    const recipesCopy = this.state.recipes.slice();
-    recipesCopy.splice(idx, 1);
+    const { recipes } = this.state; 
+    
     this.setState({
-      recipes: recipesCopy,
-    }, this.updateLocalStorage());
+      recipes: recipes.filter((recipes, i) => i !== idx),
+    });
   }
 
   updateLocalStorage() {
