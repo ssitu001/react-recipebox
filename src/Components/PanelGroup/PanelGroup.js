@@ -6,8 +6,16 @@ import PanelComponent from '../Panel/Panel';
 
 const PanelGroupComponent = (props) => {
   const panels = props.recipes.map((recipe) => {
-    return <PanelComponent key={recipe.id} {...recipe} />
-  })
+    return (
+      <PanelComponent 
+        key={recipe.id} 
+        {...recipe} 
+        openModal={props.openModal} 
+        closeModal={props.closeModal}
+      />
+    )
+  });
+  
   return (
     <PanelGroup>
       {panels}
