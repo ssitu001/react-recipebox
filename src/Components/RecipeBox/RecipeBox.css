@@ -1,6 +1,3 @@
-.well-header h3 {
-  color: #34495e;
-}
 
 .App .custom-btn {
   color: #ecf0f1;
@@ -31,4 +28,14 @@
   color: #ecf0f1;
   background-color: #982921;
   border-color: #982921;
+}
+
+.App .well {
+  background-color: #ecf0f1;
+  border: 1px solid #fff;
+  box-shadow: 10px 10px 5px #bdc3c7;
+}
+
+.App .page-header {
+  color: #34495e;
 }
