@@ -1,4 +1,6 @@
 import React from 'react';
+import propTypes from "prop-types";
+
 import { ListGroup, ListGroupItem, Button, PageHeader } from 'react-bootstrap';
 
 import './ListGroup.css';
@@ -8,7 +10,8 @@ const ListGroupComponent = (props) => {
     position,
     ingredients, 
     handleDelete, 
-    openModal } = props;
+    openModal 
+  } = props;
 
   const listItem = ingredients.map((ingredient, i) => {
     return <ListGroupItem key={i}>{ingredient}</ListGroupItem>
@@ -37,5 +40,12 @@ const ListGroupComponent = (props) => {
     </ListGroup>
   )
 }
+
+ListGroupComponent.propTypes = {
+  position: propTypes.number,
+  ingredients: propTypes.array, 
+  handleDelete: propTypes.func.isRequired,
+  openModal: propTypes.func.isRequired,
+};
 
 export default ListGroupComponent;

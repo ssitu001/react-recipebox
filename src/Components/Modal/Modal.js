@@ -1,4 +1,5 @@
 import React from 'react';
+import propTypes from "prop-types";
 import { Modal, Button } from 'react-bootstrap';
 
 import FormComponent from '../FormGroup/FormGroup';
@@ -49,5 +50,16 @@ const ModalComponent = (props) => {
     </Modal>
   )
 }
+
+ModalComponent.propTypes = {
+  showModal: propTypes.bool.isRequired,
+  closeModal: propTypes.func.isRequired,
+  modalType: propTypes.string.isRequired, 
+  addRecipe: propTypes.func.isRequired, 
+  editRecipe: propTypes.func.isRequired,
+  position: propTypes.number,
+  currentRecipeName: propTypes.string.isRequired,
+  currentRecipeIngredients: propTypes.string.isRequired, 
+};
 
 export default ModalComponent;

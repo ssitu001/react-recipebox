@@ -1,13 +1,19 @@
 import React from 'react';
+import propTypes from "prop-types";
 import { Panel } from 'react-bootstrap';
-
-import image from '../../recipe-logo.png';
 
 import ListGroupComponent from '../ListGroup/ListGroup';
 
 const PanelComponent = (props) => {
   
-  const {position, name, ingredients, handleDelete, openModal, closeModal} = props;
+  const {
+    position, 
+    name, 
+    ingredients, 
+    handleDelete, 
+    openModal, 
+    closeModal
+  } = props;
 
   const panelHeader = (
     <div>
@@ -31,5 +37,14 @@ const PanelComponent = (props) => {
     </Panel>
   )
 }
+
+PanelComponent.propTypes = {
+  position: propTypes.number,
+  name: propTypes.string.isRequired,
+  ingredients: propTypes.array.isRequired,
+  handleDelete: propTypes.func.isRequired,
+  openModal: propTypes.func.isRequired,
+  closeModal: propTypes.func.isRequired,
+};
 
 export default PanelComponent;

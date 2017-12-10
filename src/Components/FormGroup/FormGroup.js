@@ -1,5 +1,5 @@
 import React from 'react';
-import propTypes from 'prop-types';
+import propTypes from "prop-types";
 
 import { FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 
@@ -63,5 +63,12 @@ const FormComponent = (props) => {
       </form>
     )
 }
+
+FormGroup.propTypes = {
+  currentRecipeName: propTypes.string.isRequired,
+  currentRecipeIngredients: propTypes.string.isRequired,
+  handleRecipe: propTypes.func.isRequired,
+  modalType: propTypes.string.isRequired,
+};
 
 export default FormComponent;

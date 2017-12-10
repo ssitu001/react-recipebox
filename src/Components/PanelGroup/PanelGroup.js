@@ -1,11 +1,10 @@
 import React from 'react';
+import propTypes from "prop-types";
 import { PanelGroup } from 'react-bootstrap';
 
 import PanelComponent from '../Panel/Panel';
 
-
 const PanelGroupComponent = (props) => {
-  // console.log('panelGroup', props)
   const panels = props.recipes.map((recipe, i) => {
     return (
       <PanelComponent 
@@ -24,6 +23,10 @@ const PanelGroupComponent = (props) => {
       {panels}
     </PanelGroup>
   )
+}
+
+PanelComponent.propTypes = {
+  ingredients: propTypes.array.isRequired,
 }
 
 export default PanelGroupComponent;
