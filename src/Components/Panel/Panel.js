@@ -8,7 +8,10 @@ const PanelComponent = (props) => {
   const {position, name, ingredients, handleDelete, openModal, closeModal} = props;
 
   return (
-    <Panel bsStyle="primary" collapsible header={name} eventKey="1">
+    <Panel 
+      bsStyle="danger" 
+      collapsible 
+      header={name}>
       <ListGroupComponent 
         position={position} 
         ingredients={ingredients}

@@ -3,6 +3,8 @@ import { Modal, Button } from 'react-bootstrap';
 
 import FormComponent from '../FormGroup/FormGroup';
 
+import './Modal.css';
+
 const ModalComponent = (props) => {
   console.log('modalprops', props)
   const { 
@@ -25,17 +27,20 @@ const ModalComponent = (props) => {
         />
       </Modal.Body>
       <Modal.Footer>
-        {modalType === 'Add Recipe' 
+        {
+          modalType === 'Add Recipe' 
           ? <Button 
               onClick={addRecipe}
-              bsStyle="success">{modalType}
+              bsStyle="success">
+              {modalType}
             </Button>
           : <Button 
               onClick={() => editRecipe(position)}
-              bsStyle="danger">{modalType}
+              bsStyle="success">
+              {modalType}
             </Button>
         }
-        <Button onClick={closeModal}>Close</Button>
+        <Button bsStyle="warning" onClick={closeModal}>Close</Button>
       </Modal.Footer>
     </Modal>
   )
