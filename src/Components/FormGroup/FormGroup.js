@@ -4,7 +4,6 @@ import { FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 import './FormGroup.css';
 
 const FormComponent = (props) => {
-    console.log('formprops', props)
     const {
       currentRecipeName, 
       currentRecipeIngredients, 
