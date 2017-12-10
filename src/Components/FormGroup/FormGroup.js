@@ -1,4 +1,6 @@
 import React from 'react';
+import propTypes from 'prop-types';
+
 import { FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 
 import './FormGroup.css';
@@ -11,28 +13,38 @@ const FormComponent = (props) => {
       modalType,
     } = props;
 
+    const showRequiredStar = (inputField) => {
+      return inputField.length > 2
+      ? null
+      : <span className="required-field">*</span>;
+    }
+
     return (
       <form>
         {
           modalType === 'Add Recipe'
           ? <FormGroup>
-              <ControlLabel>Recipes</ControlLabel>
+              <ControlLabel>
+                Recipe {showRequiredStar(currentRecipeName)}
+              </ControlLabel>
                 <FormControl
                   type="text"
-                  placeholder={currentRecipeName}
+                  placeholder="Recipe Name"
                   name="currentRecipeName"
                   onChange={handleRecipe}
                 />
-              <ControlLabel>Ingredients</ControlLabel>
+              <ControlLabel>
+                Ingredients {showRequiredStar(currentRecipeIngredients)}
+              </ControlLabel>
                 <FormControl
                   componentClass="textarea"
-                  placeholder={currentRecipeIngredients}
+                  placeholder="Add ingredients separated by comma ie. milk, butter, sugar"
                   name="currentRecipeIngredients"
                   onChange={handleRecipe}
                 />
             </FormGroup>
           : <FormGroup>
-              <ControlLabel>Recipes</ControlLabel>
+              <ControlLabel>Recipe</ControlLabel>
               <FormControl
                 type="text"
                 value={currentRecipeName}
