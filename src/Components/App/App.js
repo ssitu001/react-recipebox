@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 
 import RecipeBox from '../RecipeBox/RecipeBox';
 
-import logo from '../../logo.svg';
+import logo from '../../recipe-logo.png';
 import './App.css';
 
 class App extends Component {
@@ -11,8 +11,7 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          {/* <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">React Recipe Box</h1> */}
+          <img src={logo} className="App-logo" alt="logo" />
         </header>
         <RecipeBox />
       </div>
