@@ -8,7 +8,6 @@ import './RecipeBox.css';
 
 class RecipeBox extends Component {
     state = {
-      count: 0,
       recipes: [],
       currentRecipeName: '',
       currentRecipeIngredients: '',
@@ -24,8 +23,8 @@ class RecipeBox extends Component {
   openModal = (type, position) => {
     const {recipes} = this.state;
     const currentRecipe = recipes[position];
-    const recipeName = currentRecipe ? currentRecipe.name : 'Recipe Name';
-    const recipeIngredients = currentRecipe ? currentRecipe.ingredients : "Add ingredients separated by comma ie. milk, butter, sugar";
+    const recipeName = currentRecipe ? currentRecipe.name : '';
+    const recipeIngredients = currentRecipe ? currentRecipe.ingredients : '';
 
     this.setState({
       showModal: true, 
@@ -107,7 +106,6 @@ class RecipeBox extends Component {
       />
     )
   }
-
 
   render() {
     return (
