@@ -6,7 +6,6 @@ import FormComponent from '../FormGroup/FormGroup';
 import './Modal.css';
 
 const ModalComponent = (props) => {
-  console.log('modalprops', props)
   const { 
     showModal,
     closeModal, 

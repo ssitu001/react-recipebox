@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
-import { Grid, Row, Col, Well, Button } from 'react-bootstrap';
+import { Grid, Row, Col, Well, PageHeader } from 'react-bootstrap';
 
 import PanelGroupComponent from '../PanelGroup/PanelGroup';
 import ModalComponent from '../Modal/Modal';
 
-class RecipeBox extends Component {
-  constructor() {
-    super();
+import './RecipeBox.css';
 
-    this.state = {
+class RecipeBox extends Component {
+    state = {
       count: 0,
       recipes: [],
       currentRecipeName: '',
@@ -17,52 +16,43 @@ class RecipeBox extends Component {
       modalType: '',
       position: null,
     };
-  }
 
   closeModal = () => {
     this.setState({showModal: false});
   }
 
   openModal = (type, position) => {
-    console.log('position==', position)
-    const {recipes, currentRecipeName, currentRecipeIngredients} = this.state;
+    const {recipes} = this.state;
     const currentRecipe = recipes[position];
-    const recipeName = currentRecipe.name || currentRecipeName;
-    const recipeIngredients = currentRecipe.ingredients || currentRecipeIngredients;
+    const recipeName = currentRecipe ? currentRecipe.name : 'Recipe Name';
+    const recipeIngredients = currentRecipe ? currentRecipe.ingredients : "Add ingredients separated by comma ie. milk, butter, sugar";
 
     this.setState({
       showModal: true, 
       modalType: type, 
       position: position,
-      currentRecipeName: recipeName || '',
-      currentRecipeIngredients: recipeIngredients || '',
+      currentRecipeName: recipeName,
+      currentRecipeIngredients: recipeIngredients,
     });
   }
 
   componentDidMount() {
-    //save recipes to local storage
     const myStorage = localStorage;
     const myRecipes = JSON.parse(myStorage.getItem('__recipes'));
     if (myRecipes) {
       this.setState({
         recipes: myRecipes,
-      })
+      });
     }
   }
-
-  componentDidUpdate() {
-    console.log(this.state)
-  }
-
 
   handleRecipe = (e) => {
     this.setState({
       [e.target.name]: e.target.value,
-    })
+    });
   }
 
   editRecipe = (position) => {
-    console.log('position', position)
     const {currentRecipeName, currentRecipeIngredients, recipes} = this.state;
     const recipeToReplace = {
       name: currentRecipeName,
@@ -72,7 +62,6 @@ class RecipeBox extends Component {
     const recipesCopy = recipes.slice();
     recipesCopy[position] = recipeToReplace;
 
-    console.log('recipesCopy', recipesCopy)
     this.setState({
       recipes: recipesCopy,
     }, () => this.updateLocalStorage());
@@ -103,7 +92,6 @@ class RecipeBox extends Component {
 
   updateLocalStorage() {
     const { recipes } = this.state;
-    console.log('yo', recipes)
     const myStorage = localStorage;
     myStorage.setItem('__recipes', JSON.stringify(recipes));
   }
@@ -127,7 +115,13 @@ class RecipeBox extends Component {
         <Row>
           <Col lg={12}>
             <Well>
-              Recipes...
+              <PageHeader>
+              {
+                this.state.recipes.length 
+                  ? 'Your current recipes'
+                  : 'Get started by adding a recipe!'
+              }
+              </PageHeader>
               <PanelGroupComponent
                 handleDelete={this.deleteRecipe}
                 openModal={this.openModal}
@@ -138,12 +132,12 @@ class RecipeBox extends Component {
         </Row>
         <Row>
           <Col lg={12}>
-            <Button
+            <button
+              className="custom-btn"
               onClick={() => this.openModal('Add Recipe')} 
-              bsSize={'large'} 
-              bsStyle={'success'}>
+              >
               Add Recipe
-            </Button>
+            </button>
           </Col>
         </Row>
         {this.createModal(this.state.modalType)}
