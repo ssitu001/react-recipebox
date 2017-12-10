@@ -12,8 +12,12 @@ const ModalComponent = (props) => {
     modalType, 
     addRecipe, 
     editRecipe,
-    position 
+    position,
+    currentRecipeName,
+    currentRecipeIngredients, 
   } = props;
+
+  const buttonDisabled = (currentRecipeName.length > 2 && currentRecipeIngredients.length > 2) ? false : true;
 
   return (
     <Modal show={showModal} onHide={closeModal}>
@@ -28,8 +32,9 @@ const ModalComponent = (props) => {
       <Modal.Footer>
         {
           modalType === 'Add Recipe' 
-          ? <Button 
+          ? <Button   
               onClick={addRecipe}
+              disabled={buttonDisabled}
               bsStyle="success">
               {modalType}
             </Button>
