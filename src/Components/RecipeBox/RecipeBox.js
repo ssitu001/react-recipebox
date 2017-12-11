@@ -58,11 +58,15 @@ class RecipeBox extends Component {
       ingredients: !Array.isArray(currentRecipeIngredients) ? currentRecipeIngredients.split(',') : currentRecipeIngredients,
     }
 
-    const recipesCopy = recipes.slice();
-    recipesCopy[position] = recipeToReplace;
+    const updatedRecipe = recipes.map((recipe, i) => {
+      if (position === i) {
+        recipe = recipeToReplace;
+      }
+      return recipe;
+    });
 
     this.setState({
-      recipes: recipesCopy,
+      recipes: updatedRecipe,
     }, () => this.updateLocalStorage());
 
     this.closeModal();
