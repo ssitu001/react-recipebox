@@ -5,6 +5,12 @@ import { FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 
 import './FormGroup.css';
 
+const showRequiredStar = (inputField) => {
+  return inputField.length > 2
+  ? null
+  : <span className="required-field">*</span>;
+};
+
 const FormComponent = (props) => {
     const {
       currentRecipeName, 
@@ -12,12 +18,6 @@ const FormComponent = (props) => {
       handleRecipe,
       modalType,
     } = props;
-
-    const showRequiredStar = (inputField) => {
-      return inputField.length > 2
-      ? null
-      : <span className="required-field">*</span>;
-    }
 
     return (
       <form>
